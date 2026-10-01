@@ -7,8 +7,6 @@ import { z } from "zod";
 import passport from "passport";
 import { submitIndexNow } from "./indexnow";
 
-import { createClient } from "@supabase/supabase-js";
-import { randomUUID } from "crypto";
 
 export async function registerRoutes(
   httpServer: Server,
@@ -24,46 +22,34 @@ export async function registerRoutes(
 
   app.post("/api/upload", isAuthenticated, async (req, res) => {
     try {
-      const supabaseUrl = process.env.SUPABASE_URL;
-      const secretKey = process.env.SUPABASE_SECRET_KEY;
-      const bucket = process.env.SUPABASE_STORAGE_BUCKET || "media";
-
-      if (!supabaseUrl || !secretKey) {
+      const uploadUrl = process.env.SUPABASE_UPLOAD_FUNCTION_URL;
+      const uploadToken = process.env.SUPABASE_UPLOAD_TOKEN;
+      if (!uploadUrl || !uploadToken) {
         return res.status(503).json({ message: "Image storage is not configured" });
       }
 
       const { fileData } = req.body as { fileData?: string };
-      const match = fileData?.match(/^data:(image\/[a-zA-Z0-9.+-]+);base64,(.+)$/);
-      if (!match) {
+      if (!fileData || typeof fileData !== "string") {
         return res.status(400).json({ message: "A valid image is required" });
       }
 
-      const mimeType = match[1];
-      const bytes = Buffer.from(match[2], "base64");
-      if (bytes.length > 6 * 1024 * 1024) {
-        return res.status(413).json({ message: "Image must be 6 MB or smaller" });
+      const response = await fetch(uploadUrl, {
+        method: "POST",
+        headers: {
+          "content-type": "application/json",
+          "x-upload-token": uploadToken,
+        },
+        body: JSON.stringify({ fileData }),
+      });
+
+      const body = await response.json().catch(() => ({}));
+      if (!response.ok) {
+        return res.status(response.status).json({
+          message: typeof body?.message === "string" ? body.message : "Upload failed",
+        });
       }
 
-      const extensionMap: Record<string, string> = {
-        "image/jpeg": "jpg",
-        "image/png": "png",
-        "image/webp": "webp",
-        "image/gif": "gif",
-      };
-      const extension = extensionMap[mimeType] || "img";
-      const objectPath = `posts/${Date.now()}-${randomUUID()}.${extension}`;
-
-      const supabase = createClient(supabaseUrl, secretKey, {
-        auth: { persistSession: false, autoRefreshToken: false },
-      });
-      const { error } = await supabase.storage
-        .from(bucket)
-        .upload(objectPath, bytes, { contentType: mimeType, upsert: false });
-
-      if (error) throw error;
-
-      const { data } = supabase.storage.from(bucket).getPublicUrl(objectPath);
-      return res.json({ url: data.publicUrl });
+      return res.json({ url: body.url });
     } catch (err) {
       console.error("Upload error:", err);
       return res.status(500).json({ message: "Upload failed" });
