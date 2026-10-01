@@ -5,6 +5,7 @@ import { registerRoutes } from "./routes";
 import { serveStatic } from "./static";
 import { sendRobotsTxt, sendSitemapXml } from "./sitemap";
 import { sendFeedXml } from "./feed";
+import { ensureDatabaseSchema } from "./db";
 
 const app = express();
 app.set("trust proxy", 1);
@@ -66,6 +67,7 @@ app.use((req, res, next) => {
 app.get("/api/health", (_req, res) => res.json({ status: "ok" }));
 
 (async () => {
+  await ensureDatabaseSchema();
   await registerRoutes(httpServer, app);
 
   app.use((err: any, _req: Request, res: Response, next: NextFunction) => {
