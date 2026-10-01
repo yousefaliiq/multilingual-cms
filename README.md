@@ -1,6 +1,6 @@
 # Multilingual CMS
 
-Multilingual CMS is a full-stack multilingual publishing platform with a public editorial experience and a protected studio for writing, translating, and publishing content.
+Multilingual CMS is a full-stack multilingual publishing platform with a public reading experience and a protected editorial studio for writing, translating, and publishing content.
 
 ## Highlights
 
@@ -8,8 +8,9 @@ Multilingual CMS is a full-stack multilingual publishing platform with a public 
 - Protected editorial studio
 - Draft and publication workflow
 - Multiple language versions per article
-- Rich article content with cover and inline image uploads
-- PostgreSQL persistence and authenticated sessions
+- Cover and inline image uploads
+- PostgreSQL persistence through a protected Supabase backend
+- Signed administrator sessions
 - Supabase Storage media uploads
 - RSS feed, sitemap, canonical metadata, and structured data
 - Responsive reading and editing experiences
@@ -20,11 +21,9 @@ Multilingual CMS is a full-stack multilingual publishing platform with a public 
 - TypeScript
 - Vite
 - Express
-- PostgreSQL
-- Drizzle ORM
+- PostgreSQL / Supabase
 - Passport
 - TanStack Query
-- Supabase Storage
 - Tailwind CSS
 
 ## Local development
@@ -42,16 +41,22 @@ npm run build
 npm start
 ```
 
-## Fresh portfolio deployment
+## Backend design
 
-1. Create a Supabase project.
-2. Run `supabase/SETUP.sql` once in the Supabase SQL Editor.
-3. Configure the environment variables from `.env.example`, including the initial administrator credentials.
-4. Deploy the repository as a Render Web Service.
-5. Sign in at `/studio` with the configured administrator credentials.
+The public database tables use Row Level Security and are not exposed directly to anonymous browser clients. The Express server talks to protected Supabase Edge Functions for content operations and media uploads. Supabase server credentials remain inside Supabase rather than the Render environment.
 
-See `DEPLOYMENT.md` for the exact setup checklist.
+Administrator access uses a single deployment credential pair stored only in the server environment and a signed, HTTP-only session cookie.
+
+## Fresh deployment
+
+1. Create a Supabase project and apply `supabase/SETUP.sql`.
+2. Deploy the protected content and media Edge Functions.
+3. Configure the variables from `.env.example`.
+4. Deploy this repository as a Render Web Service.
+5. Verify the health endpoint, public posts, studio login, editing, translation, publication, and image upload.
+
+See `DEPLOYMENT.md` for the production checklist.
 
 ## Repository safety
 
-Keep `DATABASE_URL`, `SESSION_SECRET`, `ADMIN_PASSWORD`, and `SUPABASE_SECRET_KEY` out of source control. The Supabase secret key is server-only and must never be exposed to browser code.
+Keep session secrets, administrator credentials, and protected backend tokens out of source control. No Supabase secret key is required in the web-service environment.
