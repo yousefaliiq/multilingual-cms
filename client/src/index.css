@@ -1,0 +1,224 @@
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --font-sans: 'DM Sans', sans-serif;
+    --font-display: 'Playfair Display', serif;
+
+    /* Warm Off-White / Dark Ink Theme (Default Light Mode) */
+    --background: 40 20% 96%;
+    --foreground: 220 16% 7%;
+    
+    --card: 40 20% 98%;
+    --card-foreground: 220 16% 7%;
+    
+    --popover: 40 20% 98%;
+    --popover-foreground: 220 16% 7%;
+    
+    --primary: 161 94% 30%; /* Emerald Green */
+    --primary-foreground: 0 0% 100%;
+    
+    --secondary: 40 10% 90%;
+    --secondary-foreground: 220 16% 7%;
+    
+    --muted: 40 10% 90%;
+    --muted-foreground: 220 10% 40%;
+    
+    --accent: 161 94% 30%;
+    --accent-foreground: 0 0% 100%;
+    
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 40 15% 85%;
+    --input: 40 15% 85%;
+    --ring: 161 94% 30%;
+
+    --radius: 0.25rem;
+  }
+
+  /* تطبيق الألوان الداكنة تلقائياً عند تفعيل الوضع المظلم في الجهاز */
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --background: 220 16% 7%; /* Dark Ink */
+      --foreground: 40 20% 96%; /* Warm Off-White */
+      
+      --card: 220 16% 9%;
+      --card-foreground: 40 20% 96%;
+      
+      --popover: 220 16% 9%;
+      --popover-foreground: 40 20% 96%;
+      
+      --primary: 161 94% 40%; /* Brighter Emerald for dark mode */
+      --primary-foreground: 220 16% 7%;
+      
+      --secondary: 220 16% 12%;
+      --secondary-foreground: 40 20% 96%;
+      
+      --muted: 220 16% 15%;
+      --muted-foreground: 40 10% 65%;
+      
+      --accent: 161 94% 40%;
+      --accent-foreground: 220 16% 7%;
+      
+      --border: 220 16% 15%;
+      --input: 220 16% 15%;
+      --ring: 161 94% 40%;
+    }
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground antialiased selection:bg-primary/20 selection:text-primary;
+    font-family: var(--font-sans);
+  }
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-display);
+    @apply tracking-tight;
+  }
+}
+
+/* Cinematic Noise Overlay */
+.bg-noise {
+  position: fixed;
+  inset: 0;
+  z-index: 50;
+  opacity: 0.035;
+  pointer-events: none;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+}
+
+/* تقليل شفافية النويز في الوضع المظلم لراحة العين */
+@media (prefers-color-scheme: dark) {
+  .bg-noise {
+    opacity: 0.025;
+  }
+}
+
+/* Premium Prosemirror Overrides for Reading Room */
+.prose {
+  font-family: var(--font-sans);
+}
+.prose h1, .prose h2, .prose h3, .prose h4 {
+  font-family: var(--font-display);
+  font-weight: 500;
+}
+.prose a {
+  @apply text-primary decoration-primary/30 underline-offset-4 transition-colors hover:decoration-primary;
+}
+
+/* Smooth Scrolling & Custom Scrollbar */
+html {
+  scroll-behavior: smooth;
+}
+
+.custom-scrollbar::-webkit-scrollbar {
+  width: 6px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  @apply bg-muted-foreground/10 rounded-full transition-colors hover:bg-muted-foreground/30;
+}
+
+.topic-editor[data-empty="true"]::before {
+  content: attr(data-placeholder);
+  color: hsl(var(--muted-foreground));
+  opacity: 0.75;
+}
+
+.topic-editor a,
+.topic-content a {
+  color: hsl(var(--primary));
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+
+.topic-editor p,
+.topic-content p {
+  margin: 0 0 1.25rem;
+}
+
+.topic-editor strong,
+.topic-content strong {
+  font-weight: 700;
+}
+
+.topic-editor em,
+.topic-content em {
+  font-style: italic;
+}
+
+.topic-image {
+  display: block;
+  margin-top: 1.75rem;
+  margin-bottom: 1.75rem;
+}
+
+.topic-image--left {
+  margin-inline-end: auto;
+}
+
+.topic-image--center {
+  margin-inline: auto;
+}
+
+.topic-image--right {
+  margin-inline-start: auto;
+}
+
+.topic-image__img,
+.topic-content .topic-image img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: 1.5rem;
+  box-shadow: 0 20px 45px rgba(0, 0, 0, 0.08);
+}
+
+.topic-editor .topic-image {
+  cursor: pointer;
+}
+
+.topic-editor .topic-image:focus,
+.topic-editor .topic-image:focus-visible,
+.topic-editor .topic-image:hover {
+  outline: 2px solid hsl(var(--primary) / 0.35);
+  outline-offset: 8px;
+}
+
+.topic-content {
+  max-width: none;
+  color: hsl(var(--foreground));
+  font-size: 1.125rem;
+  line-height: 1.9;
+}
+
+.topic-content blockquote {
+  border-inline-start: 3px solid hsl(var(--border));
+  padding-inline-start: 1rem;
+  color: hsl(var(--muted-foreground));
+  font-style: italic;
+  margin: 1.5rem 0;
+}
+
+.topic-content ul,
+.topic-content ol {
+  padding-inline-start: 1.5rem;
+  margin: 0 0 1.25rem;
+}
+
+.topic-content img {
+  max-width: 100%;
+}
