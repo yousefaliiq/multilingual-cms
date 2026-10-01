@@ -6,49 +6,42 @@
 - Render Web Service
 - Supabase project for PostgreSQL and Storage
 
-## 1. Create the Supabase project
+## Supabase
 
-Create a new Supabase project dedicated to this portfolio copy.
+Apply `supabase/SETUP.sql`. It creates the publishing tables, neutral demo content, the public `media` storage bucket, and the database hardening used by this project.
 
-Open **SQL Editor**, paste the entire contents of `supabase/SETUP.sql`, and run it once. This creates the application tables, session table, a public `media` storage bucket, and two neutral demo posts.
+The production web service does not receive a Supabase secret key or direct database password. Content reads/writes and image uploads are routed through protected Supabase Edge Functions. The functions use server-side Supabase credentials inside the Supabase environment.
 
-## 2. Collect Supabase values
+## Render
 
-You will need:
+Create a Node Web Service with:
 
-- `DATABASE_URL`: in the Supabase **Connect** dialog, use the **Session pooler** connection string and replace the password placeholder with the database password.
-- `SUPABASE_URL`: the project URL.
-- `SUPABASE_SECRET_KEY`: the server-only secret key (`sb_secret_...`). Never put this value in browser code or commit it to GitHub.
-
-## 3. Create the Render Web Service
-
-Connect this GitHub repository and use:
-
-- Runtime: Node
 - Build command: `npm install && npm run build`
 - Start command: `npm start`
 - Health check: `/api/health`
+- Node: 22
 
-Set these environment variables in Render:
+Server environment variables:
 
 ```text
-DATABASE_URL=...
 SESSION_SECRET=...
 ADMIN_USERNAME=...
 ADMIN_PASSWORD=...
-SUPABASE_URL=...
-SUPABASE_SECRET_KEY=...
-SUPABASE_STORAGE_BUCKET=media
+SUPABASE_CMS_FUNCTION_URL=...
+SUPABASE_CMS_TOKEN=...
+SUPABASE_UPLOAD_FUNCTION_URL=...
+SUPABASE_UPLOAD_TOKEN=...
 ```
 
-Generate `SESSION_SECRET` as a long random value. Choose a private administrator username and password. The application creates that administrator at startup only when the users table is empty. `INDEXNOW_KEY` is optional and can be omitted for the portfolio deployment.
+`INDEXNOW_KEY` is optional.
 
-## 4. Verify
+## Production checks
 
-Check:
+Verify:
 
-- `/api/health` returns `{ "status": "ok" }`
-- the two demo posts load
+- `/api/health` returns `{"status":"ok"}`
+- published demo posts load
 - `/studio` accepts the configured administrator credentials
-- a cover or inline image uploads successfully
-- creating, editing, translating, publishing, and deleting posts works
+- drafts can be created, edited, translated, published, and deleted
+- cover and inline images upload successfully
+- RSS, sitemap, and public article routes remain reachable
