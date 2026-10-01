@@ -1,51 +1,24 @@
 // script/build.ts
 import { build as esbuild } from "esbuild";
 import { build as viteBuild } from "vite";
-import { rm, readFile, copyFile, access } from "fs/promises";
-import { constants as fsConstants } from "fs";
+import { rm, readFile } from "fs/promises";
 
-// server deps to bundle to reduce openat(2) syscalls
-// which helps cold start times
+// Server dependencies bundled to reduce filesystem lookups on cold starts.
 const allowlist = [
   "@supabase/supabase-js",
-  "connect-pg-simple",
+  "cookie-session",
   "date-fns",
   "drizzle-orm",
   "drizzle-zod",
   "express",
-  "express-session",
   "passport",
   "passport-local",
-  "pg",
   "react",
   "react-dom",
   "react-markdown",
   "remark-gfm",
   "zod",
 ];
-
-async function copyConnectPgSimpleTableSql() {
-  const candidates = [
-    "node_modules/connect-pg-simple/table.sql",
-    "node_modules/connect-pg-simple/dist/table.sql",
-    "node_modules/connect-pg-simple/lib/table.sql",
-  ];
-
-  for (const src of candidates) {
-    try {
-      await access(src, fsConstants.F_OK);
-      await copyFile(src, "dist/table.sql");
-      console.log(`[build] Copied connect-pg-simple table.sql -> dist/table.sql`);
-      return;
-    } catch {
-      // try next path
-    }
-  }
-
-  console.warn(
-    "[build] WARNING: Could not find connect-pg-simple table.sql. Session table auto-create may fail."
-  );
-}
 
 async function buildAll() {
   await rm("dist", { recursive: true, force: true });
@@ -74,8 +47,6 @@ async function buildAll() {
     external: externals,
     logLevel: "info",
   });
-
-  await copyConnectPgSimpleTableSql();
 }
 
 buildAll().catch((err) => {
