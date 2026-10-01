@@ -1,7 +1,7 @@
 import passport from "passport";
 import { Strategy as LocalStrategy } from "passport-local";
 import { Express } from "express";
-import session from "express-session";
+import cookieSession from "cookie-session";
 import { createHash, timingSafeEqual } from "crypto";
 
 function safeEqual(a: string, b: string) {
@@ -25,17 +25,14 @@ export function setupAuth(app: Express) {
   }
 
   app.use(
-    session({
-      secret: sessionSecret,
-      resave: false,
-      saveUninitialized: false,
-      cookie: {
-        maxAge: 30 * 24 * 60 * 60 * 1000,
-        secure: process.env.NODE_ENV === "production",
-        httpOnly: true,
-        sameSite: "lax",
-      },
-    })
+    cookieSession({
+      name: "cms_session",
+      keys: [sessionSecret],
+      maxAge: 30 * 24 * 60 * 60 * 1000,
+      secure: process.env.NODE_ENV === "production",
+      httpOnly: true,
+      sameSite: "lax",
+    }) as any
   );
 
   app.use(passport.initialize());
