@@ -19,9 +19,7 @@ services:
         sync: false
       - key: ADMIN_PASSWORD
         sync: false
-      - key: SUPABASE_URL
+      - key: SUPABASE_UPLOAD_FUNCTION_URL
         sync: false
-      - key: SUPABASE_SECRET_KEY
+      - key: SUPABASE_UPLOAD_TOKEN
         sync: false
-      - key: SUPABASE_STORAGE_BUCKET
-        value: media
