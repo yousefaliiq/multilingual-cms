@@ -11,7 +11,8 @@ import PostReader from "./pages/PostReader";
 import Archive from "./pages/Archive";
 import TagView from "./pages/TagView";
 import About from "./pages/About";
-import Platform from "./pages/Platform";
+import Now from "./pages/Now";
+import Colophon from "./pages/Colophon";
 import Terms from "./pages/legal/Terms";
 import Disclaimers from "./pages/legal/Disclaimers";
 import Privacy from "./pages/legal/Privacy";
@@ -20,6 +21,7 @@ import Privacy from "./pages/legal/Privacy";
 import AdminLogin from "./pages/AdminLogin";
 import Dashboard from "./pages/studio/Dashboard";
 import Editor from "./pages/studio/Editor";
+import { ConsentModal } from "./components/ConsentModal";
 
 function Router() {
   return (
@@ -30,7 +32,7 @@ function Router() {
       <Route path="/archive" component={Archive} />
       <Route path="/tags/:tag" component={TagView} />
       <Route path="/about" component={About} />
-      <Route path="/platform" component={Platform} />
+      <Route path="/now" component={Now} />
       <Route path="/terms" component={Terms} />
       <Route path="/disclaimers" component={Disclaimers} />
       <Route path="/privacy" component={Privacy} />
@@ -50,6 +52,7 @@ function App() {
   return (
     <QueryClientProvider client={queryClient}>
       <TooltipProvider>
+        <ConsentModal />
         <Toaster />
         <Router />
       </TooltipProvider>
