@@ -23,8 +23,8 @@ export async function sendFeedXml(req: Request, res: Response) {
   const baseUrl = getBaseUrl(req);
   const posts = (await storage.getPosts({ published: true })).slice(0, 25);
   const selfUrl = `${baseUrl}/feed.xml`;
-  const siteTitle = "Multilingual CMS";
-  const siteDescription = "A multilingual publishing platform for focused long-form writing and editorial workflows.";
+  const siteTitle = "ATLAS";
+  const siteDescription = "A personal journal by Yousef Ali for notes, ideas, and long-form writing.";
   const latestDate = posts[0]?.updatedAt || posts[0]?.publishedAt || posts[0]?.createdAt || new Date();
 
   const items = posts
