@@ -70,17 +70,17 @@ export async function buildSeoMeta(req: Request): Promise<SeoMeta> {
   const websiteSchema = {
     "@context": "https://schema.org",
     "@type": "WebSite",
-    name: "ATLAS",
-    alternateName: "ATLAS — Yousef Ali",
+    name: "OCYOUSEF Blog",
+    alternateName: "OCYOUSEF Blog",
     url: `${baseUrl}/`,
     inLanguage: "en",
   };
 
   const defaultMeta: SeoMeta = {
-    siteName: "ATLAS",
-    title: "ATLAS — A personal journal by Yousef Ali",
+    siteName: "OCYOUSEF Blog",
+    title: "OCYOUSEF Blog",
     description:
-      "A personal journal by Yousef Ali for notes, ideas, and long-form writing.",
+      "A personal blog by Yousef Ali.",
     ogImage: `${baseUrl}/og-image-v2.png`,
     ogType: "website",
     robots: "index, follow",
@@ -98,8 +98,8 @@ export async function buildSeoMeta(req: Request): Promise<SeoMeta> {
   if (req.path === "/archive") {
     return {
       ...defaultMeta,
-      title: "Archive — ATLAS",
-      description: "Browse published entries from ATLAS, the personal journal of Yousef Ali.",
+      title: "Archive — OCYOUSEF Blog",
+      description: "Browse published entries from OCYOUSEF Blog, the personal journal of Yousef Ali.",
     };
   }
 
@@ -107,8 +107,8 @@ export async function buildSeoMeta(req: Request): Promise<SeoMeta> {
     const tag = decodeURIComponent(req.path.replace(/^\/tags\//, ""));
     return {
       ...defaultMeta,
-      title: `${tag} — ATLAS`,
-      description: `Published entries tagged with ${tag} on ATLAS.`,
+      title: `${tag} — OCYOUSEF Blog`,
+      description: `Published entries tagged with ${tag} on OCYOUSEF Blog.`,
     };
   }
 
@@ -136,7 +136,7 @@ export async function buildSeoMeta(req: Request): Promise<SeoMeta> {
           },
           publisher: {
             "@type": "Organization",
-            name: "ATLAS",
+            name: "OCYOUSEF Blog",
             logo: {
               "@type": "ImageObject",
               url: `${baseUrl}/favicon-96x96.png`,
@@ -147,7 +147,7 @@ export async function buildSeoMeta(req: Request): Promise<SeoMeta> {
 
         return {
           ...defaultMeta,
-          title: `${translation.title || post.title} — ATLAS`,
+          title: `${translation.title || post.title} — OCYOUSEF Blog`,
           description: description || defaultMeta.description,
           ogType: "article",
           ogImage: imageUrl,
@@ -163,7 +163,7 @@ export async function buildSeoMeta(req: Request): Promise<SeoMeta> {
       if (post?.published) {
         return {
           ...defaultMeta,
-          title: `${post.title} — ATLAS`,
+          title: `${post.title} — OCYOUSEF Blog`,
           description: makeDescription(post.subtitle || post.content || "") || defaultMeta.description,
           ogType: "article",
           ogImage: toAbsoluteUrl(baseUrl, post.coverImage || undefined),
