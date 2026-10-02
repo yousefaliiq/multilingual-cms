@@ -4,7 +4,7 @@ import type { InsertPost } from "@shared/schema";
 
 declare global {
   interface Window {
-    __ATLAS_BOOTSTRAP__?: {
+    __OCYOUSEF_BOOTSTRAP__?: {
       route?: "home" | "archive" | "tag" | "post" | "other";
       post?: PostResponse | null;
       posts?: PostResponse[];
@@ -15,7 +15,7 @@ declare global {
 
 function getBootstrapState() {
   if (typeof window === "undefined") return undefined;
-  return window.__ATLAS_BOOTSTRAP__;
+  return window.__OCYOUSEF_BOOTSTRAP__;
 }
 
 export function getActiveTranslation(post: PostResponse | null, lang: string) {
