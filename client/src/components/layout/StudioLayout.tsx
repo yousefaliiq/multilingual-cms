@@ -1,5 +1,5 @@
 import { Link, useLocation } from "wouter";
-import { LayoutDashboard, PenTool, Settings, LogOut } from "lucide-react";
+import { LayoutDashboard, PenTool, LogOut } from "lucide-react";
 import { useAuth, useLogout } from "@/hooks/use-auth";
 import { Button } from "@/components/ui/button";
 
@@ -21,11 +21,10 @@ export function StudioLayout({ children }: { children: React.ReactNode }) {
 
   return (
     <div className="min-h-screen flex bg-background text-foreground">
-      {/* Sidebar */}
-      <aside className="w-64 border-r border-border/50 flex flex-col hidden md:flex">
+      <aside className="w-64 border-r border-border/50 flex-col hidden md:flex">
         <div className="h-20 flex items-center px-6 border-b border-border/50">
           <Link href="/" className="font-display text-xl font-bold italic text-foreground hover:text-primary">
-            Atlas Studio
+            OC.YOUSEF Studio
           </Link>
         </div>
         
@@ -60,10 +59,9 @@ export function StudioLayout({ children }: { children: React.ReactNode }) {
         </div>
       </aside>
 
-      {/* Main Content */}
       <main className="flex-1 flex flex-col">
         <header className="h-20 border-b border-border/50 flex items-center justify-between px-8 md:hidden shrink-0">
-          <span className="font-display font-bold italic">Atlas Studio</span>
+          <span className="font-display font-bold italic">OC.YOUSEF Studio</span>
           <Button variant="ghost" size="sm" onClick={() => logout.mutate()}>Logout</Button>
         </header>
         <div className="flex-1 p-8">
