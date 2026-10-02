@@ -23,8 +23,8 @@ export async function sendFeedXml(req: Request, res: Response) {
   const baseUrl = getBaseUrl(req);
   const posts = (await storage.getPosts({ published: true })).slice(0, 25);
   const selfUrl = `${baseUrl}/feed.xml`;
-  const siteTitle = "ATLAS";
-  const siteDescription = "A personal journal by Yousef Ali for notes, ideas, and long-form writing.";
+  const siteTitle = "OCYOUSEF Blog";
+  const siteDescription = "A personal blog by Yousef Ali.";
   const latestDate = posts[0]?.updatedAt || posts[0]?.publishedAt || posts[0]?.createdAt || new Date();
 
   const items = posts
