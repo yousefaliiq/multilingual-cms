@@ -70,17 +70,17 @@ export async function buildSeoMeta(req: Request): Promise<SeoMeta> {
   const websiteSchema = {
     "@context": "https://schema.org",
     "@type": "WebSite",
-    name: "Multilingual CMS",
-    alternateName: "Multilingual CMS",
+    name: "ATLAS",
+    alternateName: "ATLAS — Yousef Ali",
     url: `${baseUrl}/`,
     inLanguage: "en",
   };
 
   const defaultMeta: SeoMeta = {
-    siteName: "Multilingual CMS",
-    title: "Multilingual CMS - Independent publishing, thoughtfully built",
+    siteName: "ATLAS",
+    title: "ATLAS — A personal journal by Yousef Ali",
     description:
-      "A multilingual publishing platform for focused long-form writing and editorial workflows.",
+      "A personal journal by Yousef Ali for notes, ideas, and long-form writing.",
     ogImage: `${baseUrl}/og-image-v2.png`,
     ogType: "website",
     robots: "index, follow",
@@ -98,8 +98,8 @@ export async function buildSeoMeta(req: Request): Promise<SeoMeta> {
   if (req.path === "/archive") {
     return {
       ...defaultMeta,
-      title: "Archive - Multilingual CMS",
-      description: "Browse all published articles from Multilingual CMS.",
+      title: "Archive — ATLAS",
+      description: "Browse published entries from ATLAS, the personal journal of Yousef Ali.",
     };
   }
 
@@ -107,8 +107,8 @@ export async function buildSeoMeta(req: Request): Promise<SeoMeta> {
     const tag = decodeURIComponent(req.path.replace(/^\/tags\//, ""));
     return {
       ...defaultMeta,
-      title: `${tag} - Multilingual CMS`,
-      description: `Published articles tagged with ${tag} on Multilingual CMS.`,
+      title: `${tag} — ATLAS`,
+      description: `Published entries tagged with ${tag} on ATLAS.`,
     };
   }
 
@@ -132,11 +132,11 @@ export async function buildSeoMeta(req: Request): Promise<SeoMeta> {
           dateModified: new Date(String(post.updatedAt || post.publishedAt || post.createdAt)).toISOString(),
           author: {
             "@type": "Person",
-            name: "Atlas Editorial",
+            name: "Yousef Ali",
           },
           publisher: {
             "@type": "Organization",
-            name: "Multilingual CMS",
+            name: "ATLAS",
             logo: {
               "@type": "ImageObject",
               url: `${baseUrl}/favicon-96x96.png`,
@@ -147,7 +147,7 @@ export async function buildSeoMeta(req: Request): Promise<SeoMeta> {
 
         return {
           ...defaultMeta,
-          title: `${translation.title || post.title} - Multilingual CMS`,
+          title: `${translation.title || post.title} — ATLAS`,
           description: description || defaultMeta.description,
           ogType: "article",
           ogImage: imageUrl,
@@ -163,7 +163,7 @@ export async function buildSeoMeta(req: Request): Promise<SeoMeta> {
       if (post?.published) {
         return {
           ...defaultMeta,
-          title: `${post.title} - Multilingual CMS`,
+          title: `${post.title} — ATLAS`,
           description: makeDescription(post.subtitle || post.content || "") || defaultMeta.description,
           ogType: "article",
           ogImage: toAbsoluteUrl(baseUrl, post.coverImage || undefined),
