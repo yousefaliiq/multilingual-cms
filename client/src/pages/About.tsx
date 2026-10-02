@@ -3,23 +3,18 @@ import { PublicLayout } from "@/components/layout/PublicLayout";
 export default function About() {
   return (
     <PublicLayout>
-      <div className="max-w-2xl mx-auto py-12">
-        <h1 className="text-4xl md:text-5xl font-display font-medium text-foreground mb-8">About Atlas</h1>
+      <div className="max-w-2xl mx-auto py-10 md:py-14">
+        <p className="text-sm uppercase tracking-[0.2em] text-primary mb-4">About</p>
+        <h1 className="text-4xl md:text-5xl font-display font-medium text-foreground mb-8">A place to keep my thoughts.</h1>
         <div className="prose prose-lg dark:prose-invert prose-p:text-foreground/80 leading-relaxed">
           <p>
-            Multilingual CMS is a portfolio project built to demonstrate a complete publishing workflow rather than a static blog template.
+            ATLAS is my personal journal. I use it to publish ideas, observations, and writing I want to keep in one place instead of scattering them across apps and notes.
           </p>
-          <h3>Editorial workflow</h3>
           <p>
-            Editors can create drafts, manage metadata and tags, add cover images, publish articles, and maintain language-specific versions from a protected studio.
+            I also built the publishing system behind it: the editor, multilingual article versions, media uploads, archive, tags, RSS, metadata, and the private studio used to manage everything.
           </p>
-          <h3>Reading experience</h3>
           <p>
-            Public pages are responsive and support archives, tags, RSS, search-friendly metadata, server-rendered article snapshots, and multilingual content.
-          </p>
-          <h3>Technical focus</h3>
-          <p>
-            The application combines a React frontend with an Express API, PostgreSQL persistence, authenticated administration, object storage, and deployment-ready production builds.
+            The public side stays intentionally quiet. The complicated part belongs behind the page, not in front of the reader.
           </p>
         </div>
       </div>
