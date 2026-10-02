@@ -184,7 +184,7 @@ export function buildPostDescription(post: any, translation: any): string {
     stripContentToText(post?.content),
   ].filter(Boolean) as string[];
 
-  return truncateText(candidates[0] || "Read the latest entry on OCYOUSEF Blog.", 160);
+  return truncateText(candidates[0] || "Read the latest article on OCYOUSEF Blog.", 160);
 }
 
 export function toJsonLd(value: unknown): string {
