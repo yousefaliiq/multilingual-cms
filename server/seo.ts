@@ -71,16 +71,16 @@ export async function buildSeoMeta(req: Request): Promise<SeoMeta> {
     "@context": "https://schema.org",
     "@type": "WebSite",
     name: "OCYOUSEF Blog",
-    alternateName: "OCYOUSEF Blog",
+    alternateName: "oc.yousef",
     url: `${baseUrl}/`,
     inLanguage: "en",
   };
 
   const defaultMeta: SeoMeta = {
     siteName: "OCYOUSEF Blog",
-    title: "OCYOUSEF Blog",
+    title: "OCYOUSEF Blog - They Lied and Here's the Truth",
     description:
-      "A personal blog by Yousef Ali.",
+      "This blog exists for one reason and one reason only: to expose what they hid and reveal the truth nobody dares to say.",
     ogImage: `${baseUrl}/og-image-v2.png`,
     ogType: "website",
     robots: "index, follow",
@@ -98,8 +98,8 @@ export async function buildSeoMeta(req: Request): Promise<SeoMeta> {
   if (req.path === "/archive") {
     return {
       ...defaultMeta,
-      title: "Archive — OCYOUSEF Blog",
-      description: "Browse published entries from OCYOUSEF Blog, the personal journal of Yousef Ali.",
+      title: "Archive - OCYOUSEF Blog",
+      description: "Browse every published article from OCYOUSEF Blog in one place.",
     };
   }
 
@@ -107,8 +107,8 @@ export async function buildSeoMeta(req: Request): Promise<SeoMeta> {
     const tag = decodeURIComponent(req.path.replace(/^\/tags\//, ""));
     return {
       ...defaultMeta,
-      title: `${tag} — OCYOUSEF Blog`,
-      description: `Published entries tagged with ${tag} on OCYOUSEF Blog.`,
+      title: `${tag} - OCYOUSEF Blog`,
+      description: `Published articles tagged with ${tag} on OCYOUSEF Blog.`,
     };
   }
 
@@ -147,7 +147,7 @@ export async function buildSeoMeta(req: Request): Promise<SeoMeta> {
 
         return {
           ...defaultMeta,
-          title: `${translation.title || post.title} — OCYOUSEF Blog`,
+          title: `${translation.title || post.title} - OCYOUSEF Blog`,
           description: description || defaultMeta.description,
           ogType: "article",
           ogImage: imageUrl,
@@ -163,7 +163,7 @@ export async function buildSeoMeta(req: Request): Promise<SeoMeta> {
       if (post?.published) {
         return {
           ...defaultMeta,
-          title: `${post.title} — OCYOUSEF Blog`,
+          title: `${post.title} - OCYOUSEF Blog`,
           description: makeDescription(post.subtitle || post.content || "") || defaultMeta.description,
           ogType: "article",
           ogImage: toAbsoluteUrl(baseUrl, post.coverImage || undefined),
