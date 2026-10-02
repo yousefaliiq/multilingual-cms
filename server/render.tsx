@@ -260,16 +260,16 @@ export function renderPrerenderedHtml(req: Request, bootstrap: BootstrapState, b
 
   if (bootstrap.route === "home") {
     return renderPostListSnapshot(
-      "Multilingual CMS — Independent publishing, thoughtfully built",
-      "A multilingual publishing platform for focused long-form writing and editorial workflows.",
+      "OCYOUSEF Blog",
+      "A personal blog by Yousef Ali.",
       bootstrap.posts || [],
     );
   }
 
   if (bootstrap.route === "archive") {
     return renderPostListSnapshot(
-      "Archive — Multilingual CMS",
-      "Browse all published articles from Multilingual CMS.",
+      "Archive — OCYOUSEF Blog",
+      "Browse all published articles from OCYOUSEF Blog.",
       bootstrap.posts || [],
     );
   }
@@ -277,7 +277,7 @@ export function renderPrerenderedHtml(req: Request, bootstrap: BootstrapState, b
   if (bootstrap.route === "tag") {
     return renderPostListSnapshot(
       `${bootstrap.tag || "Tag"} — Multilingual CMS`,
-      `Published articles tagged with ${bootstrap.tag || "this topic"}.`,
+      `Published articles tagged with ${bootstrap.tag || "this topic"} on OCYOUSEF Blog.`,
       bootstrap.posts || [],
     );
   }
