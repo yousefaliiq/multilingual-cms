@@ -260,8 +260,8 @@ export function renderPrerenderedHtml(req: Request, bootstrap: BootstrapState, b
 
   if (bootstrap.route === "home") {
     return renderPostListSnapshot(
-      "OCYOUSEF Blog",
-      "A personal blog by Yousef Ali.",
+      "OCYOUSEF Blog — They Lied and Here's the Truth",
+      "This blog exists for one reason and one reason only: to expose what they hid and reveal the truth nobody dares to say.",
       bootstrap.posts || [],
     );
   }
@@ -269,14 +269,14 @@ export function renderPrerenderedHtml(req: Request, bootstrap: BootstrapState, b
   if (bootstrap.route === "archive") {
     return renderPostListSnapshot(
       "Archive — OCYOUSEF Blog",
-      "Browse all published articles from OCYOUSEF Blog.",
+      "Browse every published article from OCYOUSEF Blog in one place.",
       bootstrap.posts || [],
     );
   }
 
   if (bootstrap.route === "tag") {
     return renderPostListSnapshot(
-      `${bootstrap.tag || "Tag"} — Multilingual CMS`,
+      `${bootstrap.tag || "Tag"} — OCYOUSEF Blog`,
       `Published articles tagged with ${bootstrap.tag || "this topic"} on OCYOUSEF Blog.`,
       bootstrap.posts || [],
     );
